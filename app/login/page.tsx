@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { FirebaseError } from "firebase/app";
 
 const { Title } = Typography;
 
@@ -33,29 +34,31 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       message.success("Logged in successfully!");
-    } catch (err: any) {
-      console.error("Firebase login error", err);
-      if (err.code === "auth/invalid-credential") {
+    } catch (err) {
+      const error = err as FirebaseError;
+      console.error("Firebase login error", error);
+      if (error.code === "auth/invalid-credential") {
         try {
           await createUserWithEmailAndPassword(auth, email, password);
           message.success("Account created & logged in!");
-        } catch (createErr: any) {
-          message.error(createErr.message || "Account creation failed");
+        } catch (createErr) {
+          const createError = createErr as FirebaseError;
+          message.error(createError.message || "Account creation failed");
           setLoading(false);
           return;
         }
-      } else if (err.code === "auth/wrong-password") {
+      } else if (error.code === "auth/wrong-password") {
         message.error("Incorrect password.");
         setLoading(false);
         return;
-      } else if (err.code === "auth/invalid-email") {
+      } else if (error.code === "auth/invalid-email") {
         message.error("Invalid email format.");
         setLoading(false);
         return;
       } else {
-        message.error(err.message || "Login failed");
+        message.error(error.message || "Login failed");
         setLoading(false);
         return;
       }

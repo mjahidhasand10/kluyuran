@@ -63,7 +63,7 @@ interface ParsedFlightData {
 }
 // Using built-in Date methods instead of dayjs
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const { Option } = Select;
 
 const Book = () => {
@@ -129,7 +129,6 @@ const Book = () => {
         }
       } catch (error) {
         console.error("Error parsing URL data:", error);
-        
       } finally {
         setLoading(false);
       }
@@ -394,7 +393,7 @@ const Book = () => {
     }
 
     // Infant passengers
-    const infantCount = parseInt(searchParams?.infants!) || 0;
+    const infantCount = parseInt(searchParams?.infants ?? "0") || 0;
     for (let i = 1; i <= infantCount; i++) {
       forms.push(
         <PassengerForm key={`infant-${i}`} passengerType="Infant" index={i} />
@@ -420,7 +419,7 @@ const Book = () => {
             <Alert
               message={
                 <span>
-                  Please don't put wrong information or Test data for{" "}
+                  Please don&apos;t put wrong information or Test data for{" "}
                   <strong>Avoid ADM</strong>
                 </span>
               }

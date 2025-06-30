@@ -1,6 +1,7 @@
 "use client";
 import {
   extractCurrency,
+  extractPrice,
   formatDateForDisplay,
   formatTime,
   getAirlineClass,
@@ -23,19 +24,22 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-interface ItineraryDetail {
-  departure_time?: string;
-  arrival_time?: string;
+interface FlightSegment {
+  airline_code?: string;
+  bookingclasscode?: string;
+  departuredate?: string;
+  arrivaldate?: string;
   departure_airport?: string;
   arrival_airport?: string;
   departure_city?: string;
   arrival_city?: string;
-  duration?: string;
+  duration?: number;
   stops?: number;
-  airline_name?: string;
-  airline_code?: string;
-  flight_number?: string;
-  [key: string]: any; // Allow for additional properties
+}
+
+interface ItineraryDetail {
+  flight_data?: FlightSegment[]; // ✅ Add this line
+  [key: string]: unknown;
 }
 
 interface PriceInfo {
@@ -44,7 +48,7 @@ interface PriceInfo {
   currency?: string;
   fare_type?: string;
   taxes?: number;
-  [key: string]: any; // Allow for additional properties
+  [key: string]: unknown; // Allow for additional properties
 }
 
 interface FlightData {
@@ -53,10 +57,10 @@ interface FlightData {
   salecurrencycode: string;
   air_logo: string;
   itin_details: ItineraryDetail[];
-  variants: any[];
+  variants: unknown[];
   variant_count: number;
   price_info: PriceInfo;
-  [key: string]: any; // Allow for additional properties from API
+  [key: string]: unknown; // Allow for additional properties from API
 }
 
 interface FlightSearchResponse {
@@ -167,10 +171,8 @@ export default function FlightSearch({ searchParams }: SearchPageProps) {
 
   const [flights, setFlights] = useState<FlightData[]>([]);
   const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     promise(() =>
       fetchFlights(
         origin,
@@ -184,7 +186,6 @@ export default function FlightSearch({ searchParams }: SearchPageProps) {
     ).then(([err, res]) => {
       if (err) setError(err);
       else setFlights(res?.data || []);
-      setLoading(false);
     });
   }, [origin, destination, checkIn, checkOut, adults, children, infants]);
 
@@ -194,7 +195,10 @@ export default function FlightSearch({ searchParams }: SearchPageProps) {
   const uniqueAirlines = Array.from(
     new Set(
       flights.map((flight) =>
-        getAirlineName(flight.air_logo, flight.itin_details?.[0]?.airline_code)
+        getAirlineName(
+          flight.air_logo,
+          flight?.itin_details?.[0]?.flight_data?.[0]?.airline_code
+        )
       )
     )
   );
@@ -633,12 +637,12 @@ export default function FlightSearch({ searchParams }: SearchPageProps) {
                             </div>
                             <div className="text-2xl font-bold">
                               {currencySymbol}
-                              {flight.price_info?.total}
+                              {extractPrice(flight.price_info)}
                             </div>
                             <div className="text-sm text-gray-500 mb-3">
                               {getAirlineClass(
-                                flight.itin_details[0].flight_data[0]
-                                  .bookingclasscode
+                                flight?.itin_details?.[0]?.flight_data?.[0]
+                                  ?.bookingclasscode || ""
                               )}
                             </div>
                             <Button

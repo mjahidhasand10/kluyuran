@@ -1,3 +1,9 @@
+interface PriceInfo {
+  total?: number;
+  base?: number;
+  currency?: string;
+}
+
 export const getAirlineClass = (code: string): string => {
   const upperCode = code.toUpperCase() as keyof typeof classMap;
 
@@ -73,7 +79,7 @@ export const getAirlineName = (
     TK: "Turkish Airlines",
   };
 
-  const match = logoUrl.match(/\/([A-Z0-9]{2,3})\.svg$/);
+  const match = logoUrl?.match(/\/([A-Z0-9]{2,3})\.svg$/);
   const codeFromUrl = match ? match[1] : "";
 
   const code = airlineCode || codeFromUrl;
@@ -125,22 +131,14 @@ export const calculateDuration = (
   }
 };
 
-export const extractPrice = (priceInfo: any): number => {
+export const extractPrice = (priceInfo: PriceInfo): number => {
   if (!priceInfo) return 0;
 
-  return (
-    priceInfo.total_price ||
-    priceInfo.totalPrice ||
-    priceInfo.base_price ||
-    priceInfo.basePrice ||
-    priceInfo.price ||
-    priceInfo.amount ||
-    0
-  );
+  return priceInfo.total || priceInfo.base || 0;
 };
 
 export const extractCurrency = (
-  priceInfo: any,
+  priceInfo: PriceInfo,
   saleCurrencyCode: string
 ): string => {
   return priceInfo?.currency || saleCurrencyCode || "USD";
