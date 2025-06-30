@@ -1,0 +1,404 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #fb3c5f;
+  --secondary: #0064d2;
+  --tertiary: #40455a;
+
+  --border-secondary: #0552a4;
+
+  --text-primary: #000;
+  --text-secondary: #5a5a5a;
+  --text-tertiary: #888888;
+  --text-success: #1a7d1a;
+  --text-danger: #b00020;
+  --text-info: #0d6efd;
+  --text-warning: #99764e;
+
+  --badge-primary: #0056b3;
+  --badge-success: #e6ede5;
+  --badge-danger: #f8e4e5;
+  --badge-info: #d2ecf6;
+  --badge-warning: #faeee2;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .packages,
+  .values,
+  .recommendations,
+  .container.news {
+    @apply grid gap-3;
+  }
+
+  .packages {
+    @apply grid-cols-2 md:grid-cols-4;
+  }
+
+  .values {
+    @apply grid-cols-3;
+  }
+
+  .recommendations {
+    @apply grid-cols-2 lg:grid-cols-4;
+  }
+
+  .container.news {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .page.search {
+    @apply bg-[#f6f6f6];
+  }
+}
+
+@layer components {
+  h1.text {
+    @apply text-3xl font-bold;
+  }
+
+  h2.text {
+    @apply text-2xl font-semibold;
+  }
+
+  h3.text {
+    @apply text-xl font-semibold;
+  }
+
+  h4.text {
+    @apply text-sm font-semibold;
+  }
+
+  h5.text {
+    @apply text-base font-semibold;
+  }
+
+  h6.text {
+    @apply text-sm font-semibold;
+  }
+
+  p.text {
+    @apply text-sm;
+  }
+
+  .button {
+    @apply px-6;
+
+    &.icon {
+      @apply p-3;
+    }
+
+    &.small {
+      @apply py-2;
+    }
+
+    &.medium {
+      @apply py-3;
+    }
+
+    &.large {
+      @apply py-4;
+    }
+
+    &.primary {
+      @apply shadow rounded-full bg-primary text-white;
+    }
+
+    &.secondary {
+      @apply rounded-xl border border-secondary bg-secondary text-white;
+    }
+
+    &.tertiary {
+      @apply rounded bg-tertiary text-white;
+    }
+  }
+
+  .anchor {
+    @apply text-primary;
+  }
+
+  .badge {
+    @apply text-sm px-2 py-1.5 rounded;
+
+    &.primary {
+      @apply bg-badge-primary text-white;
+    }
+
+    &.success {
+      @apply bg-badge-success text-text-success;
+    }
+
+    &.danger {
+      @apply bg-badge-danger text-text-danger;
+    }
+
+    &.info {
+      @apply bg-badge-info text-text-info;
+    }
+
+    &.warning {
+      @apply bg-badge-warning text-text-warning;
+    }
+  }
+
+  .card.package {
+    @apply relative w-full rounded-md aspect-[4/6] overflow-hidden hover:contrast-125 transition-all duration-300 cursor-pointer;
+
+    div {
+      @apply absolute bottom-0 left-0 w-full p-4 pt-12 bg-gradient-to-t from-black/60 to-transparent;
+
+      h4 {
+        @apply text-white mb-1;
+      }
+
+      p {
+        @apply text-white/80;
+      }
+    }
+  }
+
+  .card.value {
+    @apply p-4 space-y-3 flex flex-col items-center;
+
+    span {
+      @apply p-2 border border-gray-400 rounded-md;
+    }
+  }
+
+  .video {
+    @apply relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl bg-black;
+
+    &-wrapper {
+      @apply relative cursor-pointer;
+      height: 400px;
+    }
+
+    &-element {
+      @apply w-full h-full object-cover;
+    }
+
+    .loading {
+      &-overlay {
+        @apply absolute inset-0 flex items-center justify-center bg-black/50;
+      }
+
+      &-spinner {
+        @apply w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin;
+      }
+    }
+
+    .play-button {
+      &-overlay {
+        @apply absolute inset-0 flex items-center justify-center;
+      }
+
+      &-main {
+        @apply w-20 h-20 bg-red-500 hover:bg-red-600 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center;
+      }
+
+      &-glow {
+        @apply absolute inset-0 bg-red-500 rounded-full blur-xl opacity-30 transition-opacity duration-300 -z-10;
+
+        &-hover {
+          @apply opacity-50;
+        }
+      }
+
+      &-icon {
+        @apply w-8 h-8 text-white ml-1;
+      }
+    }
+
+    .controls {
+      &-overlay {
+        @apply absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 transition-opacity duration-300;
+
+        &.visible {
+          @apply opacity-100;
+        }
+
+        &.hidden {
+          @apply opacity-0;
+        }
+      }
+
+      &-container {
+        @apply flex items-center justify-between text-white;
+      }
+
+      &-left {
+        @apply flex items-center space-x-4;
+      }
+
+      &-button {
+        @apply hover:text-red-400 transition-colors duration-200;
+      }
+
+      &-icon {
+        @apply w-6 h-6;
+
+        &-small {
+          @apply w-5 h-5;
+        }
+      }
+    }
+
+    .progress {
+      &-bar {
+        @apply w-full h-2 bg-white/20 rounded-full cursor-pointer mb-4;
+      }
+
+      &-fill {
+        @apply h-full bg-red-500 rounded-full relative transition-all duration-150;
+      }
+
+      &-thumb {
+        @apply absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-red-500 rounded-full opacity-0 transition-opacity duration-200;
+
+        &.visible {
+          @apply opacity-100;
+        }
+      }
+    }
+
+    .volume {
+      &-container {
+        @apply flex items-center space-x-2;
+      }
+
+      &-slider {
+        @apply w-20 h-1 bg-white/20 rounded-full appearance-none cursor-pointer;
+
+        &::-webkit-slider-thumb {
+          appearance: none;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: #ef4444;
+          cursor: pointer;
+          border: 2px solid white;
+        }
+
+        &::-moz-range-thumb {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: #ef4444;
+          cursor: pointer;
+          border: 2px solid white;
+        }
+      }
+    }
+
+    .time {
+      &-display {
+        @apply text-sm;
+      }
+    }
+  }
+
+  .card.recommendation {
+    $primary-color: #ec4899;
+    $primary-hover: #db2777;
+    $text-dark: #111827;
+    $text-light: #6b7280;
+    $star-color: #fbbf24;
+
+    max-width: 24rem;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    > div:first-child {
+      position: relative;
+      height: 12rem;
+      width: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    > div:last-child {
+      @apply p-4;
+
+      > div:first-child {
+        @apply flex items-center justify-between mb-3;
+      }
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      .star {
+        width: 1rem;
+        height: 1rem;
+        fill: $star-color;
+      }
+
+      .rating-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: $text-dark;
+      }
+    }
+
+    .description {
+      font-size: 0.875rem;
+      color: $text-light;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.5rem;
+    }
+
+    .price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-dark;
+    }
+
+    .book-button {
+      background-color: $primary-color;
+      color: white;
+      font-weight: 500;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: $primary-hover;
+      }
+
+      &:focus {
+        outline: 2px solid $primary-color;
+        outline-offset: 2px;
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+}
