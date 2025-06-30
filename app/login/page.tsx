@@ -1,7 +1,7 @@
 "use client";
 
+import React, { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
 import { Form, Input, Button, Card, Typography, message } from "antd";
 import {
   signInWithEmailAndPassword,
@@ -12,7 +12,7 @@ import { FirebaseError } from "firebase/app";
 
 const { Title } = Typography;
 
-export default function Login() {
+function LoginContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -110,5 +110,19 @@ export default function Login() {
         </Form>
       </Card>
     </main>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          Loading login...
+        </div>
+      }
+    >
+      <LoginContent />
+    </Suspense>
   );
 }
