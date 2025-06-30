@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Project Overview
 
-## Getting Started
+This appears to be a web application named "kluyuran," likely a travel or booking platform. It's built with Next.js and utilizes a range of modern web technologies, including React, Redux for state
+management, and Firebase for backend services. The UI components from Ant Design and styling with Tailwind CSS suggest a focus on a clean and modern user interface.
 
-First, run the development server:
+How to run the project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+To run this project in a development environment, you would typically use the following command:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1 pnpm dev
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This will start the development server, and you can view the application in your web browser at http://localhost:3000.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tools and Assumptions
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Package Manager: The presence of a pnpm-lock.yaml file strongly indicates that pnpm is the package manager used for this project. You'll need to have pnpm installed to manage dependencies.
+- Framework: The project is built with Next.js, a popular React framework.
+- UI: The project uses a combination of Ant Design components and Tailwind CSS for styling.
+- State Management: Redux Toolkit is used for managing the application's state.
+- Backend: Firebase is likely used for backend services such as authentication, database, and storage.
+- Package Manager: The presence of a pnpm-lock.yaml file strongly indicates that pnpm is the package manager used for this project. You'll need to have pnpm installed to manage dependencies.
